@@ -35,7 +35,7 @@ enum tap_dance_codes {
     TD_CTL_PRTSC,
 };
 
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
     [TD_CTL_PRTSC] = ACTION_TAP_DANCE_DOUBLE(KC_LCTL, KC_PSCR),
 };
 
