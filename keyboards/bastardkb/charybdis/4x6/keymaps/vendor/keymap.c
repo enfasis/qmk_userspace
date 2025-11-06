@@ -72,7 +72,7 @@ void ql_finished(tap_dance_state_t *state, void *user_data) {
             }
             break;
         default:
-            tap_code(KC_LGUI);
+            register_code(KC_LGUI);
     }
 }
 
@@ -80,6 +80,8 @@ void ql_reset(tap_dance_state_t *state, void *user_data) {
     // If the key was held down and now is released then switch off the layer
     if (ql_tap_state.state == TD_DOUBLE_HOLD) {
         layer_off(LAYER_LOWER);
+    } else {
+        unregister_code(KC_LGUI);
     }
     ql_tap_state.state = TD_NONE;
 }
