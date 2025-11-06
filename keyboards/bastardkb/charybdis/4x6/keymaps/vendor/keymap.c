@@ -47,7 +47,7 @@ typedef struct {
 
 enum tap_dance_codes {
     TDC,
-    TDQ,
+    TDG,
 };
 
 td_state_t cur_dance(tap_dance_state_t *state) {
@@ -61,9 +61,6 @@ static td_tap_t ql_tap_state = {.is_press_action = true, .state = TD_NONE};
 void ql_finished(tap_dance_state_t *state, void *user_data) {
     ql_tap_state.state = cur_dance(state);
     switch (ql_tap_state.state) {
-        case TD_SINGLE_TAP:
-            tap_code(KC_QUOT);
-            break;
         case TD_DOUBLE_HOLD:
             // Check to see if the layer is already set
             if (layer_state_is(LAYER_LOWER)) {
@@ -75,7 +72,7 @@ void ql_finished(tap_dance_state_t *state, void *user_data) {
             }
             break;
         default:
-            break;
+            tap_code(KC_LGUI);
     }
 }
 
@@ -89,7 +86,7 @@ void ql_reset(tap_dance_state_t *state, void *user_data) {
 
 tap_dance_action_t tap_dance_actions[] = {
     [TDC] = ACTION_TAP_DANCE_DOUBLE(KC_LCTL, KC_PSCR),
-    [TDQ] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ql_finished, ql_reset),
+    [TDG] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ql_finished, ql_reset),
 };
 
 /** \brief Automatically enable sniping-mode on the pointer layer. */
@@ -130,10 +127,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        KC_ESC,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,       KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-      KC_LSFT,    PT_Z,    KC_X,    KC_C,    TD(TDQ), KC_B,       KC_N,    KC_M, KC_COMM,  KC_DOT, PT_SLSH, KC_LSFT,
+      KC_LSFT,    PT_Z,    KC_X,    KC_C,    KC_V,    KC_B,       KC_N,    KC_M, KC_COMM,  KC_DOT, PT_SLSH, KC_LSFT,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
-                                 KC_LGUI,    TD(TDC), KC_BSPC,    KC_ENT,  KC_SPC,
-                                             KC_LALT, KC_DEL ,    RAISE
+                                 TD(TDQ), TD(TDC), KC_BSPC,     KC_ENT,  KC_SPC,
+                                          KC_LALT,  KC_DEL,      RAISE
   //                            ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
