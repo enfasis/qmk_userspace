@@ -46,8 +46,8 @@ typedef struct {
 } td_tap_t;
 
 enum tap_dance_codes {
-    TD_CTL_PRTSC,
-    TD_QUOT_LAYR,
+    TDC,
+    TDQ,
 };
 
 td_state_t cur_dance(tap_dance_state_t *state) {
