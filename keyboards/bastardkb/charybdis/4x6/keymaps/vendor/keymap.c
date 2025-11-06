@@ -31,12 +31,65 @@ enum custom_key_codes {
     CCKC_GRAVE = 0x0035,
 };
 
+typedef enum {
+    TD_NONE,
+    TD_UNKNOWN,
+    TD_SINGLE_TAP,
+    TD_SINGLE_HOLD,
+    TD_DOUBLE_TAP,
+    TD_DOUBLE_HOLD,
+} td_state_t;
+
+typedef struct {
+    bool       is_press_action;
+    td_state_t state;
+} td_tap_t;
+
 enum tap_dance_codes {
     TD_CTL_PRTSC,
+    TD_QUOT_LAYR,
 };
 
+td_state_t cur_dance(tap_dance_state_t *state) {
+    if (state->count == 2 && state->pressed) return TD_DOUBLE_HOLD;
+    return TD_SINGLE_TAP;
+}
+
+// Initialize tap structure associated with example tap dance key
+static td_tap_t ql_tap_state = {.is_press_action = true, .state = TD_NONE};
+
+void ql_finished(tap_dance_state_t *state, void *user_data) {
+    ql_tap_state.state = cur_dance(state);
+    switch (ql_tap_state.state) {
+        case TD_SINGLE_TAP:
+            tap_code(KC_QUOT);
+            break;
+        case TD_DOUBLE_TAP_HOLD:
+            // Check to see if the layer is already set
+            if (layer_state_is(LAYER_LOWER)) {
+                // If already set, then switch it off
+                layer_off(LAYER_LOWER);
+            } else {
+                // If not already set, then switch the layer on
+                layer_on(LAYER_LOWER);
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+void ql_reset(tap_dance_state_t *state, void *user_data) {
+    // If the key was held down and now is released then switch off the layer
+    if (ql_tap_state.state == TD_DOUBLE_HOLD) {
+        layer_off(LAYER_LOWER);
+    }
+    ql_tap_state.state = TD_NONE;
+}
+
 tap_dance_action_t tap_dance_actions[] = {
-    [TD_CTL_PRTSC] = ACTION_TAP_DANCE_DOUBLE(KC_LCTL, KC_PSCR),
+    [TDC] = ACTION_TAP_DANCE_DOUBLE(KC_LCTL, KC_PSCR),
+    [TDQ] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ql_finished, ql_reset),
 };
 
 /** \brief Automatically enable sniping-mode on the pointer layer. */
@@ -77,22 +130,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        KC_ESC,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,       KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-      KC_LSFT,    PT_Z,    KC_X,    KC_C,    KC_V,    KC_B,       KC_N,    KC_M, KC_COMM,  KC_DOT, PT_SLSH, KC_LSFT,
+      KC_LSFT,    PT_Z,    KC_X,    KC_C,    TD(TDQ), KC_B,       KC_N,    KC_M, KC_COMM,  KC_DOT, PT_SLSH, KC_LSFT,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
-                        KC_LGUI, TD(TD_CTL_PRTSC),  KC_BSPC,     KC_ENT,  KC_SPC,
-                                           KC_LALT, KC_DEL ,     RAISE
+                                 KC_LGUI,    TD(TDC), KC_BSPC,    KC_ENT,  KC_SPC,
+                                             KC_LALT, KC_DEL ,    RAISE
   //                            ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
   [LAYER_LOWER] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮ ╭──────────────────────────────────────────────────────╮
-       KC_TILD, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,    KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_UNDS,
+       KC_TILD, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,    KC_CIRC,   KC_AMPR,   KC_ASTR, KC_LPRN, KC_RPRN, KC_UNDS,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       RGB_MOD, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    KC_LBRC,   KC_P7,   KC_P8,   KC_P9, KC_RBRC, XXXXXXX,
+       RGB_MOD, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_LCBR,    KC_RCBR,   KC_PIPE,   KC_P8,   KC_P9,   KC_RBRC, XXXXXXX,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       RGB_TOG, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,    KC_PPLS,   KC_P4,   KC_P5,   KC_P6, KC_PMNS, KC_PEQL,
+       RGB_TOG, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_LBRC,    KC_RBRC,   KC_BSLS,   KC_P5,   KC_P6,   KC_PMNS, KC_PEQL,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-      RGB_RMOD, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    KC_PAST,   KC_P1,   KC_P2,   KC_P3, KC_PSLS, KC_PDOT,
+      RGB_RMOD, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    KC_PAST,   KC_P1,     KC_P2,   KC_P3,   KC_PSLS, KC_PDOT,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
                                   XXXXXXX, XXXXXXX, _______,    XXXXXXX, _______,
                                            XXXXXXX, XXXXXXX,      KC_P0
@@ -105,9 +158,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        _______, _______, _______, _______, _______, KC_LBRC,    KC_RBRC, _______, _______, _______,  KC_F11, _______,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       _______, KC_LEFT, KC_VOLD, KC_VOLU, KC_RGHT, _______,    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,  KC_F12, _______,
+       _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, _______,    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,  KC_F12, _______,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       _______, KC_MUTE, KC_STOP, KC_MPLY, KC_MPRV, KC_MNXT,    _______, _______, _______, _______, _______, _______,
+       _______, KC_MUTE, KC_STOP, KC_MPLY, _______, _______,    _______, _______, _______, _______, _______, _______,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
                                   _______, _______, _______,    _______, _______,
                                            _______, _______,    XXXXXXX
