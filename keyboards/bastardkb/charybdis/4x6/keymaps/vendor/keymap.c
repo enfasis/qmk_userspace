@@ -64,7 +64,7 @@ void ql_finished(tap_dance_state_t *state, void *user_data) {
         case TD_SINGLE_TAP:
             tap_code(KC_QUOT);
             break;
-        case TD_DOUBLE_TAP_HOLD:
+        case TD_DOUBLE_HOLD:
             // Check to see if the layer is already set
             if (layer_state_is(LAYER_LOWER)) {
                 // If already set, then switch it off
