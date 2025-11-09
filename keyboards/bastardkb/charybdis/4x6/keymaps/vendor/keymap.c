@@ -131,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
       KC_LSFT,    PT_Z,    KC_X,    KC_C,    KC_V,    KC_B,       KC_N,    KC_M, KC_COMM,  KC_DOT, PT_SLSH, KC_LSFT,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
-                                 TD(TDG), TD(TDC), KC_BSPC,     KC_ENT,  KC_SPC,
+                                 TD(TDG), KC_LCTL, KC_BSPC,     KC_ENT,  KC_SPC,
                                           KC_LALT,  KC_DEL,      RAISE
   //                            ╰───────────────────────────╯ ╰──────────────────╯
   ),
@@ -141,7 +141,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_TILD,   KC_EXLM,    KC_AT,    KC_HASH,    KC_DLR,   KC_PERC,    KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_UNDS,
   // ├────────────────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        XXXXXXX, C(KC_F18), C(KC_F19),   XXXXXXX, C(KC_F15),   KC_LCBR,    KC_RCBR, KC_PIPE, XXXXXXX, XXXXXXX, KC_RBRC, XXXXXXX,
-  // ├────────────────────────────────────────────────────────────────┤ ├ ──────────────────────────────────────────────────────┤
+  // ├───────────────────────────────────────────────────────────────┤ ├ ──────────────────────────────────────────────────────┤
        XXXXXXX,    KC_F18,    KC_F19, C(KC_F16), C(KC_F14), C(KC_F13),     KC_F16,  KC_F15,  KC_F14,  KC_F13, KC_PMNS, KC_PEQL,
   // ├────────────────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        KC_LSFT,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   KC_LBRC,    KC_RBRC, KC_BSLS, XXXXXXX, XXXXXXX, KC_PSLS, KC_PDOT,
