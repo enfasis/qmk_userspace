@@ -137,18 +137,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [LAYER_LOWER] = LAYOUT(
-  // ╭──────────────────────────────────────────────────────╮ ╭──────────────────────────────────────────────────────╮
-       KC_TILD, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,    KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_UNDS,
-  // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       XXXXXXX, XXXXXXX, XXXXXXX,  KC_F18, XXXXXXX, KC_LCBR,    KC_RCBR, KC_PIPE, XXXXXXX, XXXXXXX, KC_RBRC, XXXXXXX,
-  // ├──────────────────────────────────────────────────────┤ ├ ──────────────────────────────────────────────────────┤
-   XXXXXXX, XXXXXXX,  KC_F19, XXXXXXX, C(KC_F18), C(KC_F19),     KC_F16,  KC_F15,  KC_F14,  KC_F13, KC_PMNS, KC_PEQL,
-  // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_LBRC,    KC_RBRC, KC_BSLS, XXXXXXX, XXXXXXX, KC_PSLS, KC_PDOT,
-  // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
-                                  XXXXXXX, XXXXXXX, _______,    XXXXXXX, _______,
-                                           XXXXXXX, XXXXXXX,      KC_P0
-  //                            ╰───────────────────────────╯ ╰──────────────────╯
+  // ╭───────────────────────────────────────────────────────────────╮ ╭──────────────────────────────────────────────────────╮
+       KC_TILD,  KC_EXLM,    KC_AT,    KC_HASH,    KC_DLR,   KC_PERC,    KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_UNDS,
+  // ├───────────────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
+       XXXXXXX, C(KC_18), C(KC_F19), C(KC_F15),   XXXXXXX,   KC_LCBR,    KC_RCBR, KC_PIPE, XXXXXXX, XXXXXXX, KC_RBRC, XXXXXXX,
+  // ├───────────────────────────────────────────────────────────────┤ ├ ──────────────────────────────────────────────────────┤
+       XXXXXXX,  XXXXXXX, C(KC_F16),   XXXXXXX, C(KC_F14), C(KC_F13),     KC_F16,  KC_F15,  KC_F14,  KC_F13, KC_PMNS, KC_PEQL,
+  // ├───────────────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
+       KC_LSFT,  XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   KC_LBRC,    KC_RBRC, KC_BSLS, XXXXXXX, XXXXXXX, KC_PSLS, KC_PDOT,
+  // ╰───────────────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
+                                       XXXXXXX,   XXXXXXX,   _______,    XXXXXXX, _______,
+                                                  XXXXXXX,   XXXXXXX,      KC_P0
+  //                            ╰────────────────────────────────────╯ ╰──────────────────╯
   ),
 
   [LAYER_RAISE] = LAYOUT(
