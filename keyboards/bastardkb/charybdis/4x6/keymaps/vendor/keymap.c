@@ -80,6 +80,8 @@ void ql_reset(tap_dance_state_t *state, void *user_data) {
     // If the key was held down and now is released then switch off the layer
     if (ql_tap_state.state == TD_DOUBLE_HOLD) {
         layer_off(LAYER_LOWER);
+    } else {
+        unregister_code(KC_LGUI);
     }
     ql_tap_state.state = TD_NONE;
 }
@@ -138,9 +140,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ╭──────────────────────────────────────────────────────╮ ╭──────────────────────────────────────────────────────╮
        KC_TILD, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,    KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_UNDS,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
-       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_LCBR,    KC_RCBR, KC_PIPE, XXXXXXX, XXXXXXX, KC_RBRC, XXXXXXX,
+       XXXXXXX, XXXXXXX, XXXXXXX,  KC_F18, XXXXXXX, KC_LCBR,    KC_RCBR, KC_PIPE, XXXXXXX, XXXXXXX, KC_RBRC, XXXXXXX,
   // ├──────────────────────────────────────────────────────┤ ├ ──────────────────────────────────────────────────────┤
-       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PMNS, KC_PEQL,
+       XXXXXXX, XXXXXXX,  KC_F19, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PMNS, KC_PEQL,
   // ├──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────┤
        KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_LBRC,    KC_RBRC, KC_BSLS, XXXXXXX, XXXXXXX, KC_PSLS, KC_PDOT,
   // ╰──────────────────────────────────────────────────────┤ ├──────────────────────────────────────────────────────╯
